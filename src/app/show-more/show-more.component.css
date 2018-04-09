@@ -58,3 +58,16 @@ select {
 .add {
   display: none;
 }
+
+input {
+  color: #2980b9;
+  border-radius: 5px;
+  outline: none;
+  padding: 2px;
+}
+
+.sorry {
+  width: 100%;
+  text-align: center;
+  color: red;
+}

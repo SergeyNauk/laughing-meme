@@ -4,43 +4,29 @@ import { GetInfoService } from '../get-info.service';
 @Component({
   selector: 'app-user-table',
   templateUrl: './user-table.component.html',
-  styleUrls: ['./user-table.component.css']
+  styleUrls: ['./user-table.component.css'],
 })
 
 export class UserTableComponent implements OnInit {
+  users: any;
+
   constructor(private getInfoService: GetInfoService) {
   }
 
-  renderTable() {
-    let saveArr = JSON.parse(localStorage.getItem('localArr'));
+  setUsers(data) {
+    this.users = data;
 
-    saveArr.forEach((elem) => {
-      let userId = document.querySelector(`.id_${elem.id}`);
-      let userName = document.querySelector(`.name_${elem.id}`);
-      let userEmail = document.querySelector(`.email_${elem.id}`);
-      let userStatus = document.querySelector(`.status_${elem.id}`);
+    this.saveUsers();
+  }
 
-      userId.textContent = elem.id;
-      userName.textContent = elem.name;
-      userEmail.textContent = elem.email;
-      userStatus.textContent = elem.status;
+  refreshUserTable() {
+    this.getInfoService.getValue().subscribe(data => {
+      this.setUsers(data);
     });
   }
 
-  saveUsersArr(data) {
-    let serializeUserArr = JSON.stringify(data);
-
-    localStorage.setItem('localArr', serializeUserArr);
-
-    this.renderTable();
-  }
-
-  refactorUserArr(data) {
-    data.forEach((elem) => {
-      elem.status = 'user';
-    });
-
-    this.saveUsersArr(data);
+  saveUsers() {
+    this.getInfoService.saveUsersArr(this.users);
   }
 
   ngOnInit() {
@@ -49,10 +35,10 @@ export class UserTableComponent implements OnInit {
 
     if (saveArr == null) {
       this.getInfoService.getValue().subscribe(data => {
-        this.refactorUserArr(data);
+        this.setUsers(data);
       });
     } else {
-      this.renderTable();
+      this.users = saveArr;
     }
   }
 }
