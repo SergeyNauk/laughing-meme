@@ -13,8 +13,7 @@ export class ShowMoreComponent implements OnInit {
   private id: number;
   private subscription: Subscription;
   private path: string;
-
-  user: object;
+  private user: object;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -40,8 +39,7 @@ export class ShowMoreComponent implements OnInit {
     if (this.path != 'new') {
       this.user = this.getInfoService.getUserData(this.id);
 
-      this.user == undefined ? this.wrapEl.nativeElement.innerHTML = '<div class="sorry" style="' + // if the remote user path was entered
-        'width: 100%;text-align: center;color: red; font-size: 48px">sorry, user not found :(</div>' : this.user;
+      this.user == undefined ? this.wrapEl.nativeElement.innerHTML = '<div class="sorry">sorry, user not found :(</div>' : this.user; // if the remote user path was entered
     } else {
       let maxId = this.getInfoService.getMaxUserId();
 

@@ -4,8 +4,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class GetInfoService {
-  url: any = 'https://jsonplaceholder.typicode.com/users';
-  users: any;
+ private url: any = 'https://jsonplaceholder.typicode.com/users';
 
   constructor(private http: Http) {
   }
@@ -17,7 +16,6 @@ export class GetInfoService {
       elem.status = 'user';
     });
 
-    this.users = body;
     return body;
   }
 
